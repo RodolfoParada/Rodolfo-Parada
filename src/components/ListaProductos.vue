@@ -1,4 +1,8 @@
 <template>
+
+
+     
+
   <div>
     <h1>Lista de Productos</h1>
     <form>
@@ -36,6 +40,7 @@
 </template>
 
 <script>
+
 import Json from '../Json/postrs.json';
 
 export default {
@@ -43,6 +48,7 @@ export default {
   data() {
     return {
       items: [],
+      
     };
   },
   mounted() {

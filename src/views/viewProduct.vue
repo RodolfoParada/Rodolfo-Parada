@@ -1,18 +1,25 @@
 <template>
-<slot>
+
+ 
+    <carro :carrito="carrito"></carro>  
+
   <listaProductos @add-to-cart="addToCart"></listaProductos>  
-</slot>
+
+
+
 
 </template>
 
     <script>
+    import carro from '../components/CarritoCompra.vue'
     import listaProductos from "../components/ListaProductos.vue"
 
     
     export default {
       name: 'viewProduct',
       components: {
-          listaProductos,
+            listaProductos,
+             carro,
       },
       methods: {
         addToCart(item) {

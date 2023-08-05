@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1>Carrito de compra</h1>
-
     <div class="container">
       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 d-flex">
         <table class="table">
@@ -15,9 +13,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in cartItems" :key="item.name">
-              <td>{{ item.name }}</td>
-              <td>{{ item.price }}</td>
+            <tr v-for="(item, index) in cartItems" :key="item.id">
+              <td>{{ item.nombre }}</td>
+              <td>{{ item.precio }}</td>
               <td>
                 <div class="row">
                   <div class="col-3">
@@ -53,7 +51,7 @@
               <td>
                 <button
                   class="btn btn-danger"
-                  @click="removeFromCart(item)"
+                  @click=" eliminarDelCarrito(index)"
                 >
                   Eliminar
                 </button>
@@ -62,13 +60,26 @@
           </tbody>
         </table>
       </div>
+      
     </div>
+    
   </div>
+  <div class="container mt-3">
+      <div class="row">
+        <div class="col-12">
+          <h4>Total a Pagar: {{ calcularTotalAPagar() }}</h4>
+        </div>
+      </div>
+    </div>
 </template>
 
 <script>
 export default {
   name: 'CarritoCompra',
+     data() {
+    return {
+    };
+  },
   computed: {
     cartItems() {
       const cartItems = [];
@@ -76,7 +87,7 @@ export default {
 
       // Agrupar los items por nombre y calcular la cantidad total
       selectedItems.forEach(item => {
-        const existingItem = cartItems.find(i => i.name === item.name);
+        const existingItem = cartItems.find(i => i.nombre === item.nombre);
         if (existingItem) {
           existingItem.quantity += 1; // Incrementar la cantidad en 1
         } else {
@@ -97,10 +108,25 @@ export default {
       item.quantity++;
     },
     getTotal(item) {
-      return item.price * item.quantity;
+      return item.precio * item.quantity;
     },
     removeFromCart(item) {
       this.$store.dispatch('removeItem', item);
+    },
+    calcularTotalAPagar() {
+      let total = 0;
+      this.cartItems.forEach(item => {
+        total += this.getTotal(item);
+      });
+      return total;
+    },
+    eliminarDelCarrito(index) {
+      const item = this.cartItems[index];
+      if (item.quantity > 1) {
+        item.quantity--; // Disminuir la cantidad si es mayor a 1
+      } else {
+        this.cartItems.splice(index, 1); // Eliminar completamente el producto si la cantidad es 1
+      }
     },
   },
 };

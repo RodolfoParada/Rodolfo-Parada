@@ -48,6 +48,22 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import( /* webpackChunkName: "about" */ '../views/vistaNav')
+  },
+  {
+    path: '/todo-anterior',
+    name: 'todoAnterior',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import( /* webpackChunkName: "about" */ '../views/todoAnterior.vue')
+  },
+  {
+    path: '/prueba',
+    name: 'Prueba',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import( /* webpackChunkName: "about" */ '../views/vistaPruebaProductos.vue')
   }
 ]
 

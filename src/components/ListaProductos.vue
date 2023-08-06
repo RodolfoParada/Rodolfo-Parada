@@ -31,18 +31,33 @@
         </div>
       </div>
     </form>
+    
+  <Pagination
+      :totalEntries="totalEntries"
+      :currentPage="currentPage"
+      :totalPages="totalPages"
+      @page-change="handlePageChange"
+    />
   </div>
 </template> 
 
 <script>
+
+import Pagination from '../components/pagination.vue';
 import axios from 'axios';
 
 export default {
   name: 'ListaProductos',
+  components: {
+   Pagination,
+    
+  },
   data() {
     return {
       products: [],
       listProductos: {},
+      currentPage: 1,
+      itemsPerPage: 6
     };
   },
   mounted() {
@@ -70,6 +85,42 @@ export default {
       } catch (error) {
         console.error('no hay respuesta:', error);
       }
+    },
+  previousPage() {
+      this.currentPage -= 1;
+    },
+    // Cambiar a la página siguiente
+    nextPage() {
+      this.currentPage += 1;
+    },
+    // handlePageChange(newPage) {
+    //   this.currentPage = newPage;
+    // },
+     computed: {
+      totalEntries() {
+        // Calculate the total number of items
+        // return this.yourDataArray.length;
+        return this.products.length;
+      },
+      totalPages() {
+        // Calculate the total number of pages
+        return Math.ceil(this.totalEntries / this.itemsPerPage);
+      },
+      paginatedItems() {
+        // Slice your data array to get the items for the current page
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        return this.products.slice(startIndex, endIndex);
+       },
+      totalPages() {
+        return Math.ceil(this.allData.length / this.itemsPerPage);
+      },
+      // Datos paginados
+      paginatedData() {
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        return this.allData.slice(startIndex, endIndex);
+      },
     },
 
   },

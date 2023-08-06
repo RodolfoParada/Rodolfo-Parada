@@ -180,6 +180,7 @@
          <listaProductos @add-to-cart="addToCart"></listaProductos>  
      </div>
 
+
 </template>
 
 
@@ -201,12 +202,15 @@ import carro from '../components/CarritoCompra.vue'
 import listaProductos from "../components/ListaProductos.vue"
 import carrito from '../components/CarritoCompra.vue'
 
+
+
 export default {
     name: 'Navbar',
   components: {
         listaProductos,
         carro,
-        carrito
+    carrito
+      
     },
    data() {
         return {

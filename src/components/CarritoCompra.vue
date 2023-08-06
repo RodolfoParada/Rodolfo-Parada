@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: 'CarritoCompra',
      data() {
@@ -86,12 +87,12 @@ export default {
       const selectedItems = this.$store.getters.selectedItems;
 
       // Agrupar los items por nombre y calcular la cantidad total
-      selectedItems.forEach(item => {
-        const existingItem = cartItems.find(i => i.nombre === item.nombre);
+       selectedItems.forEach((item) => {
+        const existingItem = cartItems.find((i) => i.nombre === item.nombre);
         if (existingItem) {
-          existingItem.quantity += 1; // Incrementar la cantidad en 1
+          existingItem.quantity += 1;
         } else {
-          cartItems.push({...item, quantity: 1}); // Inicializar la cantidad en 1
+          cartItems.push({ ...item, quantity: 1 });
         }
       });
 
@@ -99,13 +100,18 @@ export default {
     },
   },
   methods: {
+        
+    ...mapActions(['removeItem']), 
+    
     decrementQuantity(item) {
       if (item.quantity > 1) {
         item.quantity--;
+         this.$store.dispatch('addItem', item);
       }
     },
     incrementQuantity(item) {
       item.quantity++;
+       this.$store.dispatch('addItem', item);
     },
     getTotal(item) {
       return item.precio * item.quantity;
@@ -125,10 +131,15 @@ export default {
       if (item.quantity > 1) {
         item.quantity--; // Disminuir la cantidad si es mayor a 1
       } else {
-        this.cartItems.splice(index, 1); // Eliminar completamente el producto si la cantidad es 1
+        this.removeFromCart(item); // Eliminar completamente el producto si la cantidad es 1
       }
     },
-  },
+    
+    // eliminarDelCarrito(index) {
+    //   const item = this.cartItems[index];
+    // },
+
+  }
 };
 </script>
 

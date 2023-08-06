@@ -11,6 +11,7 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
 
+
 const cartItems = localStorage.getItem('cartItems');
 if (cartItems) {
     store.commit('setCartItems', JSON.parse(cartItems));

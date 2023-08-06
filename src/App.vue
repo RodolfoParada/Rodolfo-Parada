@@ -17,14 +17,14 @@
 
 <script>
 
-import CarritoCompra from './components/CarritoCompra.vue';
+// import CarritoCompra from './components/CarritoCompra.vue';
 import ListaProductos from './components/ListaProductos.vue';
 
 
 export default {
   name: 'viewProduct',
   components: {
-    CarritoCompra,
+    // CarritoCompra,
     ListaProductos
   },
   data() {

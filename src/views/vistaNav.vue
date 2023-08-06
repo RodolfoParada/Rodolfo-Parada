@@ -1,7 +1,6 @@
 <template>
-
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
         <a class="navbar-brand" href="#">Tortas</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -20,21 +19,21 @@
               </button> -->
             </li>
             <li class="nav-item">
-               <!-- <router-link to="/carrito-compra">carrito compra</router-link> -->
+              <!-- <router-link to="/carrito-compra">carrito compra</router-link> -->
              <div class="row"> 
                 <div class="col-10 arriba">
                   <AtributosRiac />
                 </div>
               </div>
               <div class="row">
-    <div class="col d-flex justify-content-end mt-n5">
-      <!-- Button trigger modal -->
-      <button type="button" class="Boton btn btn-primary" @click="showModal = true">
-        Carrito de Compra
-      </button>
-
-      <!-- Modal -->
-      <transition name="fade">
+                <div class="col d-flex justify-content-end mt-n5">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="Boton btn btn-primary" @click="showModal = true">
+                    Carrito de Compra
+                  </button>
+                  
+                  <!-- Modal -->
+                  <transition name="fade">
         <div v-if="showModal" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -45,17 +44,52 @@
                 </button>
               </div>
               <div class="modal-body">
-              <!-- aqui va el codigo  -->
-              <carrito></carrito>
+                <!-- aqui va el codigo  -->
+                <carrito></carrito>
               </div>
               <div class="modal-footer justify-content-center">
                 <!-- <button type="button" class="btn btn-danger" @click="showModal = false">Cancelar</button> -->
-                <button type="button" class="btn btn-dark">CONFIRMAR COMPRA</button>
+                <button type="button" class="btn btn-dark"  @click="confirmPurchase">CONFIRMAR COMPRA</button>
               </div>
             </div>
-           </div>
           </div>
+        </div>
            </transition>
+           
+           
+           <transition name="fade">
+             <div
+             v-if="showThankYouModal"
+             class="modal fade show"
+             style="display: block;"
+             tabindex="-1"
+             role="dialog"
+             aria-labelledby="exampleModalLongTitle"
+             aria-hidden="true"
+             >
+             <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                 <div class="modal-header">
+                   <h5 class="modal-title" id="exampleModalLongTitle">Gracias por realizar su compra</h5>
+                   <button type="button" class="close" @click="showThankYouModal = false" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+              **********************
+              
+              ¡Gracias por su compra!
+              
+              **********************
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" @click="continueShopping">Seguir Comprando</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+
              </div>
               </div>
             </li>
@@ -177,6 +211,7 @@
          <carro :carrito="carrito"></carro>  
      </div>
      <div>
+       <h6 class="mt-5 d-flex justify-content-start p-4">* Una vez que hayas hecho click a Agregar carrito te puedes dirigir al carrito de compra para finalizar la compra</h6>
          <listaProductos @add-to-cart="addToCart"></listaProductos>  
      </div>
 
@@ -198,7 +233,7 @@ import {
 
 import { mapGetters } from 'vuex'
 
-import carro from '../components/CarritoCompra.vue'
+// import carro from '../components/CarritoCompra.vue'
 import listaProductos from "../components/ListaProductos.vue"
 import carrito from '../components/CarritoCompra.vue'
 
@@ -208,7 +243,7 @@ export default {
     name: 'Navbar',
   components: {
         listaProductos,
-        carro,
+        // carro,
     carrito
       
     },
@@ -218,7 +253,9 @@ export default {
             password: '',
             repassword: '',
             errorMessage: '',
-            showModal: false,
+          showModal: false,
+          showPurchaseConfirmationModal: false,
+          showThankYouModal: false,
         };
     },
    methods: {
@@ -260,7 +297,14 @@ export default {
        },
       addToCart(item) {
             this.carrito.push(item);
-        },
+     },
+        confirmPurchase() {
+      this.showPurchaseConfirmationModal = false;
+      this.showThankYouModal = true;
+    },
+    continueShopping() {
+      this.showThankYouModal = false;
+    },
      
    },
     computed: {

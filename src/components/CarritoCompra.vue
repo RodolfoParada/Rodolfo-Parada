@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 d-flex">
-        <table class="table">
+        <table class="table" >
           <thead>
             <tr>
               <th>Producto</th>

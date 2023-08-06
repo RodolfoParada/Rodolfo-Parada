@@ -106,7 +106,7 @@ export default {
     decrementQuantity(item) {
       if (item.quantity > 1) {
         item.quantity--;
-         this.$store.dispatch('addItem', item);
+         this.$store.dispatch('removeItem', item);
       }
     },
     incrementQuantity(item) {
